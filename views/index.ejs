@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head.ejs') %>
+    <title>Document</title>
+</head>
+<body>
+    <%- include('./partials/header.ejs') %>
+
+<body>
+    <div class="container">
+        <div class="main">
+            <div class="main-content">
+                <div class="intro">
+                    <div class="intro2">
+                        <h2>Блоги по программированию</h2>
+                        <% 
+                        if(user._id && !user.isAdmin){
+                    %>
+                       <a href="/new">Написать Блог</a> 
+
+        
+                    <% 
+                        }
+                    %>
+                    </div>
+                    <p>Популярные и лучшие публикации по программированию для начинающих
+                        и профессиональных программистов и IT-специалистов.</p>
+                </div>
+                <% 
+                blogs.forEach(item =>{
+                    console.log('User Id:', user._id);
+        console.log('Author Id:', item.author ? item.author._id : null);
+                %>   
+                <div class="blog_img">
+                    <img src="<%= item.image %>" alt="" srcset="">
+                </div>
+                <div class="blog_info">
+                    <h3><%= item.title %></h3>
+                    <% 
+                    if (item && item.author && user && user._id && user._id.toString() === item.author._id.toString()) {
+                        %>
+                    <div class="modal_window">
+                        <a href="/edit_product/<%=item._id%>"><button id="edit" class="edit_button">Редактировать</button></a>
+                        <a href="/delete/<%= item._id %>" class="delete_link"><button class="delete_button" >Удалить</button></a>
+                    </div>
+                    <% 
+                        }
+                    %>
+                    <p><%= item.description %></p>
+                    <div class="blog_icons">
+                        <div class="blog_icon"><img src="./images/icons/date.svg" alt="" srcset=""><%= item.time %></div>
+                        <div class="blog_icon"><img src="./images/icons/visibility.svg" alt="" srcset="">21</div>
+                        <div class="blog_icon"><img src="./images/icons/message.svg" alt="" srcset="">4</div>
+                        <div class="blog_icon"><img src="./images/icons/forums.svg" alt="" srcset=""><%= item.category.name %></div>
+                        <div class="blog_icon"><img src="./images/icons/person.svg" alt="" srcset=""><%= item.author.full_name %></div>
+                    </div>
+                </div>
+                <%
+                })
+
+                %>
+            </div>
+            
+            <div class="categories">
+                <h3>Категории</h3>
+                <% categories.forEach(category => {
+                    %>
+                    <a href="/<%= category.key %>"><%= category.name%></a>
+                    <%
+                })%>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

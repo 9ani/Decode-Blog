@@ -1,0 +1,31 @@
+<header>
+    <div class="logo"><a href="/">AITU Blog</a></div>
+    <div class="search">
+        <input type="text" placeholder="Поиск по блогам">
+        <button>
+             <i class="fa-solid fa-magnifying-glass"></i>
+             Найти
+        </button>
+    </div>
+    <div class="auth_buttons">
+        <% 
+            if(user._id && !user.isAdmin){
+        %>
+            <a href="/profile/<%= user._id  %>">Профиль</a> 
+            <a href="/api/signout" class="logout-btn">Выход</a>
+            <% 
+            }else if(user._id && user.isAdmin){
+        %>
+        <a href="/admin/<%= user._id  %>">Профиль</a>
+        <a href="/api/signout" class="logout-btn">Выход</a>
+        <% 
+            } else{
+        %>
+        <a href="/register">Регистрация</a>
+        <a href="/login">Вход</a>
+        <%
+        }
+        %>
+        
+    </div>
+</header>
