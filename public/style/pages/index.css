@@ -7,7 +7,7 @@
 .main-content{
     background-color: #fff;
     padding: 50px 100px 100px 100px;
-    width: 80%;
+    width: 70%;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
@@ -15,7 +15,7 @@
 .categories{
     background-color: #fff;
     padding: 50px;
-    width: 20%;
+    width: 30%;
 }
 .main-content h2{
     color: #000;
@@ -118,4 +118,14 @@ border-bottom: 1px transparent ;
     border-bottom: 1px dotted ;
     transition: .8s;
 
+}
+.arrows{
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+.arrows:hover{
+    cursor: pointer;
 }

@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true })); // Use extended: true for bodyP
 
 app.use(bodyParser.json());
 app.use(methodOverride('_method'));
-
+app.use(express.json());
 app.use(session({
     name: 'blog.session',
     secret: 'keyboard cat',
@@ -37,6 +37,8 @@ app.use(require('./server/pages/router'));
 app.use(require('./server/Categories/router'));
 app.use(require('./server/auth/router'));
 app.use(require('./server/Blogs/router'));
+app.use(require('./server/Admin/router'));
+
 
 const PORT = 3000;
 app.listen(PORT, () => {

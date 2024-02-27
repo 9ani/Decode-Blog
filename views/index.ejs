@@ -3,6 +3,9 @@
 <head>
     <%- include('./partials/head.ejs') %>
     <title>Document</title>
+    
+<link rel="stylesheet" type="text/css" href="./slick/slick.css"/>
+<link rel="stylesheet" type="text/css" href="./slick/slick-theme.css"/>
 </head>
 <body>
     <%- include('./partials/header.ejs') %>
@@ -33,16 +36,23 @@
         console.log('Author Id:', item.author ? item.author._id : null);
                 %>   
                 <div class="blog_img">
-                    <img src="<%= item.image %>" alt="" srcset="">
+                    <% item.images.forEach(image => { %>
+                        <div><img src="<%= image %>" alt="" srcset=""></div>
+                    <% }) %>
                 </div>
+                <div class="arrows">
+                    <i class="fa-solid fa-left-long" id="prevArrow"></i> 
+                    <i class="fa-solid fa-right-long" id="nextArrow"></i>   
+                </div>
+               
                 <div class="blog_info">
                     <h3><%= item.title %></h3>
                     <% 
                     if (item && item.author && user && user._id && user._id.toString() === item.author._id.toString()) {
                         %>
                     <div class="modal_window">
-                        <a href="/edit_product/<%=item._id%>"><button id="edit" class="edit_button">Редактировать</button></a>
-                        <a href="/delete/<%= item._id %>" class="delete_link"><button class="delete_button" >Удалить</button></a>
+                        <a href="/edit/<%=item._id%>"><button id="edit" class="edit_button">Редактировать</button></a>
+                        <a onclick="console.log('Delete button clicked'); deleteBlogs('<%= item._id %>')" class="delete_link"><button class="delete_button">Удалить</button></a>
                     </div>
                     <% 
                         }
@@ -53,7 +63,7 @@
                         <div class="blog_icon"><img src="./images/icons/visibility.svg" alt="" srcset="">21</div>
                         <div class="blog_icon"><img src="./images/icons/message.svg" alt="" srcset="">4</div>
                         <div class="blog_icon"><img src="./images/icons/forums.svg" alt="" srcset=""><%= item.category.name %></div>
-                        <div class="blog_icon"><img src="./images/icons/person.svg" alt="" srcset=""><%= item.author.full_name %></div>
+                        <div class="blog_icon"><img src="./images/icons/person.svg" alt="" srcset=""><%= item.author?.full_name %></div>
                     </div>
                 </div>
                 <%
@@ -72,6 +82,29 @@
             </div>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js" integrity="sha512-NQfB/bDaB8kaSXF8E77JjhHG5PM6XVRxvHzkZiwl3ddWCEPBa23T76MuWSwAJdMGJnmQqM0VeY9kFszsrBEFrQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="./slick/slick.min.js"></script>
+    <script src="/js/deleteBlogs.js"></script>
+    <script></script>
+    <script>
+let prevArrow = document.getElementById("prevArrow")
+let nextArrow = document.getElementById("nextArrow")
+
+            $('.blog_img').slick({
+            dots: true,
+            infinite: true,
+            speed: 500,
+            fade: true,
+            cssEase: 'linear',
+            prevArrow: prevArrow,
+        nextArrow: nextArrow,
+            });
+				
+    </script>
     
+
 </body>
 </html>
