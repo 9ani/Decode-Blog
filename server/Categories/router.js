@@ -6,7 +6,7 @@ const {getAllCategories} = require('./controller')
 const writeDataCategory = require('./seed')
 
 
-router.get('/api/genre' , getAllCategories)
+router.get('/api/categories' , getAllCategories)
 
 writeDataCategory()
 

@@ -8,6 +8,8 @@ const methodOverride = require('method-override');
 const i18next = require('i18next');
 const i18nextMiddleware = require('i18next-http-middleware'); 
 const switchLanguageRouter = require('./server/pages/switch-language');
+const mongoose = require('mongoose')
+
 
 const app = express();
 
@@ -23,15 +25,19 @@ app.use(bodyParser.json());
 app.use(methodOverride('_method'));
 app.use(express.json());
 
-app.use(session({
-    name: 'blog.session',
-    secret: 'keyboard cat',
-    maxAge: 1000 * 60 * 60 * 7,
-    resave: false,
-    store: mongooseStore.create({
-        mongoUrl: 'mongodb://127.0.0.1:27017/blog',
-    }),
-}));
+app.use(
+    session({
+        name: 'blog.session',
+        secret: 'keyboard cat',
+        resave: false,
+        saveUninitialized: false,
+        store: mongooseStore.create({
+            mongoUrl: 'mongodb+srv://gani:qwerty123456@weatherapi.qd1uz2q.mongodb.net/blog?retryWrites=true&w=majority',
+            mongooseConnection: mongoose.connection, 
+            ttl: 7 * 24 * 60 * 60, 
+        }),
+    })
+);
 
 i18next
     .use(i18nextMiddleware.LanguageDetector)
