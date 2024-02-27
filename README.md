@@ -59,4 +59,8 @@ A simple blogging platform with user registration, login, authentication, author
 Implement functionality within the admin page to add, edit, and delete items related to your topic on the main page. Each item should include three pictures, two names for localization, two descriptions for localization, and timestamps for creation, update, and deletion. Display items on the main page in well-designed blocks, featuring a carousel with three pictures, the name, and description of each item.
 
 ## Language Switch
+<<<<<<< HEAD
 A language switch functionality is available. Users can change their preferred language for a personalized experience.
+=======
+A language switch functionality is available. Users can change their preferred language for a personalized experience.
+>>>>>>> c7693b6b410ca192abf97fafa88a05fee1aaa285
