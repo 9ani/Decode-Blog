@@ -3,20 +3,33 @@ const router = express.Router();
 const User = require('../auth/User')
 const Blog = require('../Blogs/Blog');
 const Categories = require('../Categories/Categories');
+const i18n = require('i18n'); // Import i18n module
 
-router.get('/', async(req, res)=>{
-    const allCategories = await Categories.find()
+router.get('/', async (req, res) => {
+    const allCategories = await Categories.find();
     const blogs = await Blog.find().populate('category').populate('author');
-    
 
-    res.render("index",{categories: allCategories, user: req.user ? req.user : {}, blogs})
-})
+    const currentLanguage = req.language || req.lng; 
+    console.log('Current Language:', currentLanguage);
+
+    res.render("index", {
+        categories: allCategories,
+        user: req.user ? req.user : {},
+        blogs,
+        currentLanguage,
+    });
+});
+
 
 router.get('/login',(req,res)=>{
-    res.render("login", {user: req.user ? req.user : {}})
+    const currentLanguage = req.language || req.lng; 
+
+    res.render("login", {user: req.user ? req.user : {},currentLanguage})
 })
 router.get('/register',(req,res)=>{
-    res.render("register", {user: req.user ? req.user : {}})
+    const currentLanguage = req.language || req.lng; 
+
+    res.render("register", {user: req.user ? req.user : {},currentLanguage})
 })
 
 router.get('/profile/:id', async (req, res) => {

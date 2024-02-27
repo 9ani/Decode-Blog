@@ -13,7 +13,6 @@ const createBlog = async (req, res) => {
     req.body.description.length > 2
   ) {
     try {
-      // Call getPhoto function three times
       const imageUrl1 = await getPhoto(req.body.title);
       const imageUrl2 = await getPhoto(req.body.title);
       const imageUrl3 = await getPhoto(req.body.title);
@@ -24,19 +23,17 @@ const createBlog = async (req, res) => {
       const formattedDate = `${currentDate.getDate()} ${currentDate.toLocaleString('default', { month: 'short' })} ${currentDate.getFullYear()}`;
       const formattedTime = `${currentDate.getHours()}:${currentDate.getMinutes()}`;
 
-      // Create a single blog entry with an array of image URLs
       const blog = new Blog({
         title: req.body.title,
         category: req.body.category,
         time: `${formattedTime} - ${formattedDate}`,
-        images: [imageUrl1, imageUrl2, imageUrl3], // Store image URLs in an array
+        images: [imageUrl1, imageUrl2, imageUrl3], 
         description: req.body.description,
         author: req.user._id,
       });
 
       console.log(blog);
 
-      // Save the blog entry
       await blog.save();
 
       res.redirect(`/`);
@@ -74,7 +71,7 @@ const editBlog = async (req, res) => {
         title: req.body.title,
         category: req.body.category,
         time: `${formattedTime} - ${formattedDate}`,
-        images: imageUrls, // Store image URLs in an array
+        images: imageUrls, 
         description: req.body.description,
         author: req.user._id,
       });
@@ -85,9 +82,7 @@ const editBlog = async (req, res) => {
       res.redirect(`/edit/${req.body.id}?error=1`);
     }
   } catch (error) {
-    // Check if the error message is 'No photo found'
     if (error.message === 'No photo found') {
-      // Handle the absence of a photo (e.g., provide a default image URL)
       res.redirect('/');
     } else {
       console.error('Error editing blog:', error);
@@ -124,8 +119,6 @@ const getPhoto = async (title) => {
 };
 
 
-// In Blogs/controller.js
-
 const deleteBlog = async (req, res) => {
   try {
       const blog = await Blog.findById(req.params.id);
@@ -146,9 +139,26 @@ const deleteBlog = async (req, res) => {
 };
 
 
+const searchBlogs = async (req, res) => {
+  try {
+      const searchTitle = req.query.title || '';
+      console.log('Search Title:', searchTitle);
+
+      const regex = new RegExp(searchTitle, 'i');
+      
+      const matchingBlogs = await Blog.find({ title: regex });
+
+      res.json(matchingBlogs);
+  } catch (error) {
+      console.error('Error searching blogs:', error);
+      res.status(500).send('Internal Server Error');
+  }
+};
+
 module.exports = {
   createBlog,
   editBlog,
   getPhoto,
   deleteBlog,
+  searchBlogs, 
 };

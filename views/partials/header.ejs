@@ -1,31 +1,29 @@
 <header>
     <div class="logo"><a href="/">AITU Blog</a></div>
     <div class="search">
-        <input type="text" placeholder="Поиск по блогам">
-        <button>
-             <i class="fa-solid fa-magnifying-glass"></i>
-             Найти
+        <input type="text" id="blogSearchInput" placeholder="<%= __('Search blogs') %>">
+        <button onclick="searchBlogs()">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <%= __('Search') %>
         </button>
     </div>
     <div class="auth_buttons">
-        <% 
-            if(user._id && !user.isAdmin){
-        %>
-            <a href="/profile/<%= user._id  %>">Профиль</a> 
-            <a href="/api/signout" class="logout-btn">Выход</a>
-            <% 
-            }else if(user._id && user.isAdmin){
-        %>
-        <a href="/admin/<%= user._id  %>">Профиль</a>
-        <a href="/api/signout" class="logout-btn">Выход</a>
-        <% 
-            } else{
-        %>
-        <a href="/register">Регистрация</a>
-        <a href="/login">Вход</a>
-        <%
-        }
-        %>
-        
+        <% if (user._id && !user.isAdmin) { %>
+            <a href="/profile/<%= user._id  %>"><%= __('Profile') %></a>
+            <a href="/api/signout" class="logout-btn"><%= __('Logout') %></a>
+        <% } else if (user._id && user.isAdmin) { %>
+            <a href="/admin/<%= user._id  %>"><%= __('Profile') %></a>
+            <a href="/api/signout" class="logout-btn"><%= __('Logout') %></a>
+        <% } else { %>
+            <a href="/register"><%= __('Register') %></a>
+            <a href="/login"><%= __('Login') %></a>
+        <% } %>
     </div>
+    <!-- Update the language-switch links in your header.ejs file -->
+<div>
+    <a href="/switch-language?lang=en"><img src="./images/icons/english.webp" width="50px" alt="" srcset=""></a>
+    <a href="/switch-language?lang=ru"><img  src="./images/icons/russian.png" width="50px" alt="" srcset=""></a>
+</div>
+
 </header>
+

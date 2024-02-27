@@ -42,6 +42,7 @@ line-height: 24px;
 .blog_img img{
     width: 100%;
     height: 500px;
+    object-fit: cover;
 }
 .intro{
     text-align: center;
@@ -128,4 +129,28 @@ border-bottom: 1px transparent ;
 }
 .arrows:hover{
     cursor: pointer;
+}
+.delete_button{
+    border-radius: 4px;
+    background: #00A2DC;
+    text-decoration: none;
+    padding: 20px;
+    color: white;
+}
+.edit_button{
+    border-radius: 4px;
+    background: #00A2DC;
+    text-decoration: none;
+    padding: 20px;
+    color: white;
+}
+.quote-container{
+    border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+            background-color: #f0f0f0;
+}
+.quote-container p{
+    font-style: italic;
+
 }

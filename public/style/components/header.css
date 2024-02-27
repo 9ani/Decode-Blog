@@ -18,6 +18,7 @@ header{
 }
 .search{
     display: flex;
+
 }
 .search input{
     border-radius: 4px 0px 0px 4px;
@@ -49,6 +50,8 @@ border: none;
 .auth_buttons{
 display: flex;
 gap: 20px;
+
+
 }
 .auth_buttons a{
     border-radius: 4px;

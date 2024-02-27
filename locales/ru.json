@@ -1,0 +1,23 @@
+{
+    "hello": "Привет",
+    "welcome": "Добро пожаловать в наш блог",
+    "search": "Поиск",
+    "greeting": "greeting",
+    "buttonText": "buttonText",
+    "Search blogs": "Поиск в блогах",
+    "Search": "Поиск",
+    "Profile": "Профиль",
+    "Logout": "Выйти",
+    "English": "Английский",
+    "Russian": "Русский",
+    "Register": "Регистрация",
+    "Login": "Вход",
+    "Enter email": "Введите почту",
+    "Enter full name": "Введите полное имя",
+    "Enter password": "Введите пароль",
+    "Confirm password": "Подтвердите пароль",
+	"Blog Title": "Блоги по программированию",
+    "Popular and best publications on programming for beginners and professional programmers and IT specialists.": "Популярные и лучшие публикации по программированию для начинающих и профессиональных программистов и IT-специалистов.",
+	"Categories": "Категории"
+}
+
