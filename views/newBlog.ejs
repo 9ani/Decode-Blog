@@ -9,8 +9,9 @@
 
 <body>
     <div class="container"> 
-        <form action="/api/blogs/new" method="POST" class="form">
+        <form action="/api/blogs/new" method="POST" class="form" enctype="multipart/form-data">
             <h3>Добавление блога</h3>
+            
                 <fieldset class="fieldset">
                     <input type="text" name="title" id="" placeholder="Введите заголовок блога">
                 </fieldset>
@@ -24,6 +25,10 @@
                         <%
                             }) %>
                     </select>
+                </fieldset>
+                <fieldset class="fieldset">
+                    <label for="">Добавьте картинку блога</label>
+                    <input type="file" name="image">
                 </fieldset>
                 <fieldset class="fieldset">
                     <input type="text" name="description" id="description" placeholder="Введите описание блога">

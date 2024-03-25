@@ -3,9 +3,6 @@
 <head>
     <%- include('./partials/head.ejs') %>
     <title>Document</title>
-    
-    <link rel="stylesheet" type="text/css" href="./slick/slick.css"/>
-    <link rel="stylesheet" type="text/css" href="./slick/slick-theme.css"/>
 </head>
 <body>
     <%- include('./partials/header.ejs') %>
@@ -15,36 +12,31 @@
             <div class="main-content">
                 <div class="intro">
                     <div class="intro2">
-                        <h2><%= __('Blog Title') %></h2>
                         <% 
                         if(user._id && !user.isAdmin){
                     %>
-                        <a href="/new">Написать Блог</a> 
+                        <h2>Мои блоги</h2>
+                        <a href="/new">Новый Блог</a> 
                     <% 
-                        }
+                        }else{
                     %>
+
+                    <h2 id="blog_title">Блоги по программированию</h2>
+                            <% } %>
                     </div>
 
-                    <p><%= __('Popular and best publications on programming for beginners and professional programmers and IT specialists.') %></p>
-                    <div class="quote-container"></div>
-
-                </div>
-
+                    <p>Популярные и лучшие публикации по программированию для начинающих
+                        и профессиональных программистов и IT-специалистов.</p>
+                    
+                    </div>
                 <% 
                 blogs.forEach(item => {
-                    console.log('User Id:', user._id);
-                    console.log('Author Id:', item.author ? item.author._id : null);
+                    
                 %>   
                 <div class="blog_img">
-                    <% item.images.forEach(image => { %>
-                        <div><img src="<%= image %>" alt="" srcset=""></div>
-                    <% }) %>
+                        <img src="<%= item.image %>" alt="" srcset="">
                 </div>
-                <div class="arrows">
-                    <i class="fa-solid fa-left-long prev-arrow" id="prevArrow"></i> 
-                    <i class="fa-solid fa-right-long next-arrow" id="nextArrow"></i>
- 
-                </div>
+               
                
                 <div class="blog_info">
                     <h3><%= item.title %></h3>
@@ -70,42 +62,54 @@
                 </div>
                 <%
             })%>
+            <div class="pages">
+                <%
+                    let localsString = ''
+                    if(locals.category){
+                        localsString = `category=${locals.category}&`
+                    }
+                    if(locals.search){
+                        localsString = `search=${locals.search}&`
+
+                    }
+                    for(let i =0; i < pages;i++){
+                %>
+                        <a href="?<%=localsString%>page=<%=i%>"><%= i+1 %></a>
+                <%
+                    } 
+                 %>
+            </div>
 
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js" integrity="sha512-NQfB/bDaB8kaSXF8E77JjhHG5PM6XVRxvHzkZiwl3ddWCEPBa23T76MuWSwAJdMGJnmQqM0VeY9kFszsrBEFrQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
                 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
                 <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-                <script type="text/javascript" src="./slick/slick.min.js"></script>
                 <script src="/js/deleteBlogs.js"></script>
-                <script src="/js/searchBlogs.js"></script>
-                <script src="/js/getQuote.js"></script> 
             </div>
             
+            <% if (user._id ) { %>
+                <div class="categories">
+                    <div class="mini-profile">
+                        <img src="/images/icons/profile-img.png" alt="" srcset="">
+                        <h2><%= user.full_name %></h2>
+                        <p><%= user.about %></p>
+                            <a id="profile" href="/profile/<%= user._id  %>">Редактировать</a>
+
+                    </div>
+                </div>
+            <% } else { %>
             <div class="categories">
-                <h3><%= __('Categories')%></h3>
+                <h3>Категории</h3>
                 <% categories.forEach(category => {
                     %>
-                    <a href="/<%= category.key %>"><%= category.name%></a>
+                    <a href="?category=<%= category.key %>"><%= category.name%></a>
                     <%
                 })%>
+                <% } %>
+
             </div>
         </div>
     </div>
-
-<script>
-    let prevArrow = $('.prev-arrow');
-let nextArrow = $('.next-arrow');
-
-$('.blog_img').slick({
-    dots: true,
-    infinite: true,
-    speed: 500,
-    fade: true,
-    cssEase: 'linear',
-    prevArrow: prevArrow,
-    nextArrow: nextArrow,
-});
-    </script>
    
 </body>
 </html>

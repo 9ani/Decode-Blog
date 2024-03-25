@@ -1,29 +1,30 @@
 <header>
-    <div class="logo"><a href="/">AITU Blog</a></div>
-    <div class="search">
-        <input type="text" id="blogSearchInput" placeholder="<%= __('Search blogs') %>">
+    <div class="logo"><a href="/">Decode Blog</a></div>
+    <form class="head-search">
+        <input type="text" id="blogSearchInput" name="search" placeholder="Search blogs">
         <button onclick="searchBlogs()">
             <i class="fa-solid fa-magnifying-glass"></i>
-            <%= __('Search') %>
+            Search
         </button>
-    </div>
-    <div class="auth_buttons">
+    </form>
         <% if (user._id && !user.isAdmin) { %>
-            <a href="/profile/<%= user._id  %>"><%= __('Profile') %></a>
-            <a href="/api/signout" class="logout-btn"><%= __('Logout') %></a>
+            <div class="mini">
+
+            <a href="/profile/<%= user._id  %>"><img src="/images/icons/profile-img.png" id="mini" alt="" srcset=""></a>
+            </div>
         <% } else if (user._id && user.isAdmin) { %>
-            <a href="/admin/<%= user._id  %>"><%= __('Profile') %></a>
-            <a href="/api/signout" class="logout-btn"><%= __('Logout') %></a>
+            <div class="auth_buttons">
+            <a href="/admin/<%= user._id  %>">Profile</a>
+            <a href="/api/signout">Logout</a>
+            </div>
         <% } else { %>
-            <a href="/register"><%= __('Register') %></a>
-            <a href="/login"><%= __('Login') %></a>
+            <div class="auth_buttons">
+
+            <a href="/register">Register</a>
+            <a href="/login">Login</a>
+            </div>
         <% } %>
-    </div>
-    <!-- Update the language-switch links in your header.ejs file -->
-<div>
-    <a href="/switch-language?lang=en"><img src="./images/icons/english.webp" width="50px" alt="" srcset=""></a>
-    <a href="/switch-language?lang=ru"><img  src="./images/icons/russian.png" width="50px" alt="" srcset=""></a>
-</div>
+
 
 </header>
 

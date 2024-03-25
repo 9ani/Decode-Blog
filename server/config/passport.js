@@ -9,7 +9,7 @@ passport.use(new LocalStrategy(
     },
     function(email, password, done){
         User.findOne({email}).then(user=>{
-            bcrypt.compare(password,user.password, function(err, result){
+            bcrypt.compare(password, (user && user.password) || '', function(err, result) {
                 if(err){
                     return done(err)
                 }

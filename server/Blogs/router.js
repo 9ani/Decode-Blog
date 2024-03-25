@@ -1,12 +1,12 @@
-// In router.js
+const express = require('express')
+const router = express.Router()
+const {upload} = require('./multer')
+const { createBlog, editBlog,  deleteBlog } = require('./controller');
+const{isAuth} = require('../auth/middlewares')
 
-const express = require('express');
-const router = express.Router();
-const { createBlog, editBlog, getPhoto, deleteBlog, searchBlogs } = require('./controller');
 
-router.post('/api/blogs/new', createBlog);
-router.post('/api/blogs/edit', editBlog);
-router.delete('/api/blogs/:id', deleteBlog);
-router.get('/api/blogs/search', searchBlogs); // Use the search function
+router.post('/api/blogs/new',isAuth,upload.single('image'), createBlog);
+router.post('/api/blogs/edit',isAuth,upload.single('image'), editBlog);
+router.delete('/api/blogs/:id',isAuth, deleteBlog);
 
 module.exports = router;

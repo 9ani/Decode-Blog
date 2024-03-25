@@ -18,6 +18,9 @@
                     <input type="text" name="full_name" id="" value="<%= user.full_name  %>">
                 </fieldset>
                 <fieldset class="fieldset">
+                    <input type="text" name="about" id="" placeholder="Напишите про себя">
+                </fieldset>
+                <fieldset class="fieldset">
                     <input type="password" name="password" id="" placeholder="Введите новый пароль">
                 </fieldset>
                 <fieldset class="fieldset">
@@ -26,7 +29,10 @@
                 <fieldset class="fieldset">
                     <button type="submit">Изменить профиль</button>
                 </fieldset>
+                
+
         </form>
+                    <div class="logout-btn"><a href="/api/signout" >Logout</a></div>
     </div>
 </body>
 </html>

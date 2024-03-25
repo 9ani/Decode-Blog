@@ -5,7 +5,7 @@ const BlogSchema = new mongoose.Schema({
     title: String,
     category: {type: Schema.Types.ObjectId , ref: 'category'},
     time: String,
-    images: [{ type: String }], 
+    image: String , 
     description: String,
     time: String,
     author:{type: Schema.Types.ObjectId, ref:'user'}

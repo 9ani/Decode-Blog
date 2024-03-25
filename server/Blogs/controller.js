@@ -1,67 +1,35 @@
 const Blog = require('./Blog');
 const fs = require('fs');
 const path = require('path');
-const axios = require('axios'); // Import axios for making API requests
+const User = require('../auth/User')
 
 const createBlog = async (req, res) => {
-  if (!req.user) {
-    res.redirect('/login');
-    return;
-  }
-  if (
-    req.body.title.length > 2 &&
-    req.body.description.length > 2
-  ) {
-    try {
-      const imageUrl1 = await getPhoto(req.body.title);
-      const imageUrl2 = await getPhoto(req.body.title);
-      const imageUrl3 = await getPhoto(req.body.title);
-
-      console.log('Fetched Image URLs:', imageUrl1, imageUrl2, imageUrl3);
-
+  if(req.file && req.body.title.length > 2 && 
+    req.body.description.length > 2  )
+{
       const currentDate = new Date();
       const formattedDate = `${currentDate.getDate()} ${currentDate.toLocaleString('default', { month: 'short' })} ${currentDate.getFullYear()}`;
       const formattedTime = `${currentDate.getHours()}:${currentDate.getMinutes()}`;
 
-      const blog = new Blog({
+      await new Blog({
         title: req.body.title,
         category: req.body.category,
         time: `${formattedTime} - ${formattedDate}`,
-        images: [imageUrl1, imageUrl2, imageUrl3], 
+        image: `/images/blogs/${req.file.filename}`, 
         description: req.body.description,
         author: req.user._id,
-      });
-
-      console.log(blog);
-
-      await blog.save();
-
-      res.redirect(`/`);
-    } catch (error) {
-      console.error('Error creating blog:', error);
-      res.redirect('/new?error=1');
-    }
+      }).save();
+      res.redirect(`/`);    
   } else {
     res.redirect('/new?error=1');
   }
 };
 
 const editBlog = async (req, res) => {
-  try {
-    console.log('Edit Blog Request Body:', req.body);
+  if(req.file && req.body.title.length > 2 && 
+    req.body.description.length > 2  ){
 
-    if (
-      req.body.title.length > 2 &&
-      req.body.category &&
-      req.body.description.length > 2
-    ) {
-      const imageUrls = await Promise.all([
-        getPhoto(req.body.title),
-        getPhoto(req.body.title),
-        getPhoto(req.body.title),
-      ]);
 
-      console.log('Fetched Image URLs:', imageUrls);
 
       const currentDate = new Date();
       const formattedDate = `${currentDate.getDate()} ${currentDate.toLocaleString('default', { month: 'short' })} ${currentDate.getFullYear()}`;
@@ -71,63 +39,32 @@ const editBlog = async (req, res) => {
         title: req.body.title,
         category: req.body.category,
         time: `${formattedTime} - ${formattedDate}`,
-        images: imageUrls, 
+        image: `/images/blogs/${req.file.filename}`,
         description: req.body.description,
         author: req.user._id,
-      });
+      }, { new: true }); 
 
       res.redirect('/');
-    } else {
-      console.log('Validation Error: Invalid form data');
-      res.redirect(`/edit/${req.body.id}?error=1`);
-    }
-  } catch (error) {
-    if (error.message === 'No photo found') {
-      res.redirect('/');
-    } else {
-      console.error('Error editing blog:', error);
-      res.redirect(`/edit/${req.body.id}?error=1`);
-    }
+    } else{
+      res.redirect(`/edit/${req.body.id}?error=1`)
   }
+  
 };
-
-
-const getPhoto = async (title) => {
-  try {
-      const accessKey = 'tjZa3_FiUlmcGH9Y36YkR1dv6d7jJPdRjy9QwElCWyA';
-      console.log('Blog Title:', title);
-      const apiUrl = `https://api.unsplash.com/photos/random?query=${encodeURIComponent(title)}&client_id=${accessKey}`;
-
-      const response = await axios.get(apiUrl);
-
-      if (response.status === 404) {
-          console.log('No photo found for the specified query.');
-          throw new Error('No photo found');
-      }
-
-      const photoData = response.data;
-
-      if (!photoData.urls || !photoData.urls.regular) {
-          throw new Error('Image URL not found in API response');
-      }
-
-      return photoData.urls.regular;
-  } catch (error) {
-      console.error('Error fetching photo:', error.message);
-      throw new Error('Internal Server Error');
-  }
-};
-
 
 const deleteBlog = async (req, res) => {
   try {
-      const blog = await Blog.findById(req.params.id);
+      const  blog = await Blog.findById(req.params.id);
 
       if (!blog) {
           return res.status(404).send('Not found');
       }
 
+      const filePath = path.join(__dirname, '../../../decode_blog/public', blog.image);
+      console.log('Deleting file at path:', filePath);
 
+      if (fs.existsSync(filePath)) {
+          fs.unlinkSync(filePath);
+      }
 
       await Blog.findByIdAndDelete(req.params.id);
 
@@ -139,26 +76,8 @@ const deleteBlog = async (req, res) => {
 };
 
 
-const searchBlogs = async (req, res) => {
-  try {
-      const searchTitle = req.query.title || '';
-      console.log('Search Title:', searchTitle);
-
-      const regex = new RegExp(searchTitle, 'i');
-      
-      const matchingBlogs = await Blog.find({ title: regex });
-
-      res.json(matchingBlogs);
-  } catch (error) {
-      console.error('Error searching blogs:', error);
-      res.status(500).send('Internal Server Error');
-  }
-};
-
 module.exports = {
   createBlog,
   editBlog,
-  getPhoto,
   deleteBlog,
-  searchBlogs, 
 };

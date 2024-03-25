@@ -9,7 +9,7 @@
 
 <body>
     <div class="container"> 
-        <form action="/api/blogs/edit" method="POST" class="form">
+        <form action="/api/blogs/edit" method="POST" class="form" enctype="multipart/form-data">
             <h3>Editing Blog</h3>
             <fieldset>
                 <input type="hidden" value="<%= blog._id %>" name="id">
@@ -28,6 +28,10 @@
                         }) 
                     %>
                 </select>
+            </fieldset>
+            <fieldset class="fieldset">
+                <label for="">Добавьте картинку блога</label>
+                <input type="file" name="image">
             </fieldset>
             <fieldset class="fieldset">
                 <input type="text" name="description" id="description" value="<%= blog.description %>" placeholder="Enter blog description">

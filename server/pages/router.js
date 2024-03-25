@@ -3,33 +3,45 @@ const router = express.Router();
 const User = require('../auth/User')
 const Blog = require('../Blogs/Blog');
 const Categories = require('../Categories/Categories');
-const i18n = require('i18n'); // Import i18n module
 
 router.get('/', async (req, res) => {
+    const options = {}
+    const categories = await Categories.findOne({key: req.query.category})
+    if(categories){
+        options.category = categories._id
+        res.locals.category = req.query.category
+    }
+    let page = 0
+    const limit = 3
+
+    if(req.query && req.query.page > 0){
+        page = req.query.page
+    }
+
+    if(req.query.search && req.query.search.length > 0){
+        options.$or = [
+            {
+                title: new RegExp(req.query.search, 'i')
+            }
+        ]
+        res.locals.search = req.query.seacrh
+    }
+    const totalBlogs = await Blog.countDocuments(options)
     const allCategories = await Categories.find();
-    const blogs = await Blog.find().populate('category').populate('author');
-
-    const currentLanguage = req.language || req.lng; 
-    console.log('Current Language:', currentLanguage);
-
+    const blogs = await Blog.find(options).skip(page * limit).limit(limit).populate('category').populate('author');
     res.render("index", {
         categories: allCategories,
         user: req.user ? req.user : {},
         blogs,
-        currentLanguage,
+        pages: Math.ceil(totalBlogs / limit )
     });
 });
 
-
 router.get('/login',(req,res)=>{
-    const currentLanguage = req.language || req.lng; 
-
-    res.render("login", {user: req.user ? req.user : {},currentLanguage})
+    res.render("login", {user: req.user ? req.user : {}})
 })
 router.get('/register',(req,res)=>{
-    const currentLanguage = req.language || req.lng; 
-
-    res.render("register", {user: req.user ? req.user : {},currentLanguage})
+    res.render("register", {user: req.user ? req.user : {}})
 })
 
 router.get('/profile/:id', async (req, res) => {

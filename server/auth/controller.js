@@ -39,7 +39,6 @@ const signUp = async (req, res) => {
 const signIn = (req, res)=>{
     if(req.user.isAdmin){
         res.redirect(`/admin/${req.user._id}`)
-
     }else{
         res.redirect(`/`)
 
@@ -57,10 +56,10 @@ const signOut = (req,res)=>{
 
 const editUser = async (req, res) => {
     try {
-        const { full_name, password, re_password } = req.body;
+        const { full_name, password, re_password, about } = req.body;
         const userId = req.user._id;
 
-        if (!(full_name && password && re_password)) {
+        if (!(full_name && password && re_password && about)) {
             return res.redirect(`/edit/${userId}?error=1`);
         }
 
@@ -78,7 +77,9 @@ const editUser = async (req, res) => {
             const hash = await bcrypt.hash(password, salt);
 
             user.full_name = full_name;
+            user.about = about
             user.password = hash;
+            
 
             await user.save();
 

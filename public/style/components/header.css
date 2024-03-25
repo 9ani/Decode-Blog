@@ -16,11 +16,11 @@ header{
     text-decoration: none;
 
 }
-.search{
+.head-search{
     display: flex;
 
 }
-.search input{
+.head-search input{
     border-radius: 4px 0px 0px 4px;
 border: 1px solid #E7E7E7;
 background: #FFF;
@@ -36,7 +36,7 @@ padding-left: 20px;
 box-sizing: border-box;
 }
 
-.search button{
+.head-search button{
     color: #FFF;
 font-family: Roboto;
 font-size: 16px;
@@ -59,4 +59,12 @@ background: #00A2DC;
 text-decoration: none;
 padding: 20px;
 color: white;
+}
+#mini{
+    width: 40%;
+    margin-left: 100px;
+    position: relative;
+}
+.mini{
+    width: 10%;
 }
