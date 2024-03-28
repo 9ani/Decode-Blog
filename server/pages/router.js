@@ -3,6 +3,8 @@ const router = express.Router();
 const User = require('../auth/User')
 const Blog = require('../Blogs/Blog');
 const Categories = require('../Categories/Categories');
+const Rate = require('../Rates/Rates')
+
 
 router.get('/', async (req, res) => {
     const options = {}
@@ -81,5 +83,16 @@ router.get('/not-found', (req, res) => {
     res.render("notfound");
 });
 
+router.get('/detail/:id', async(req, res)=>{
+    const allCategories = await Categories.find();
+    const rates = await Rate.find({blogId: req.params.id}).populate('authorId')
+    let counter = 0
+    for (let i = 0; i < rates.length; i++){
+        counter += 1
+    }
+    const blog = await Blog.findById(req.params.id).populate('category').populate('author')
+    res.render("detail", {user: req.user ? req.user : {}, blog: blog, rates: rates, counter: counter,   categories: allCategories
+})
+})
 
 module.exports = router

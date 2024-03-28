@@ -33,6 +33,8 @@ app.use(require('./server/Categories/router'));
 app.use(require('./server/auth/router'));
 app.use(require('./server/Blogs/router'));
 app.use(require('./server/Admin/router'));
+app.use(require('./server/Rates/router'))
+
 
 const PORT = 3000;
 app.listen(PORT, () => {

@@ -9,8 +9,10 @@
 
 <body>
     <div class="container"> 
+        <div class="newBlog"> 
+
         <form action="/api/blogs/edit" method="POST" class="form" enctype="multipart/form-data">
-            <h3>Editing Blog</h3>
+            <h3>Редактирование блога</h3>
             <fieldset>
                 <input type="hidden" value="<%= blog._id %>" name="id">
             </fieldset>
@@ -18,7 +20,6 @@
                 <input type="text" name="title" value="<%= blog.title %>" placeholder="Enter blog title">
             </fieldset>
             <fieldset class="fieldset">
-                <label for="">Select category</label>
                 <select name="category">
                     <% 
                         categories.forEach(category => {
@@ -40,6 +41,9 @@
                 <button type="submit">Update</button>
             </fieldset>
         </form>
+        </div>
     </div>
+    <%- include("partials/scripts.ejs") %>
+
 </body>
 </html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head.ejs') %>
+    <title>Document</title>
+</head>
+<body>
+    <%- include('./partials/header.ejs') %>
+
+    <div class="container">
+        <div class="main">
+            <div class="main-content">
+                <div class="intro">
+                <div class="blog_img">
+                        <img src="<%= blog.image %>" alt="" srcset="">
+                </div>
+                <div class="blog_icons">
+                    <div class="blog_icon"><img src="/images/icons/date.svg" alt="" srcset=""><%= blog.time %></div>
+                    <div class="blog_icon"><img src="/images/icons/visibility.svg" alt="" srcset="">21</div>
+                    <div class="blog_icon"><img src="/images/icons/message.svg" alt="" srcset="">4</div>
+                    <div class="blog_icon"><img src="/images/icons/forums.svg" alt="" srcset=""><%= blog.category.name %></div>
+                    <div class="blog_icon"><img src="/images/icons/person.svg" alt="" srcset=""><%= blog.author?.full_name %></div>
+                </div>
+               
+               
+                <div class="blog_info">
+                    <div class="blog_info2">
+
+                    <h3><%= blog.title %></h3>
+                    
+                    <% 
+                    if (blog && blog.author && user && user._id && user._id.toString() === blog.author._id.toString()) {
+                    %>
+                    <div class="modal_window">
+                        <i class="fa-solid fa-ellipsis-vertical ellipsis"></i>
+                        <div class="modal_content">
+                            <a href="/edit/<%=blog._id%>"><button id="edit" class="edit_button">Редактировать</button></a>
+                            <a onclick="console.log('Delete button clicked'); deleteBlogs('<%= blog._id %>')" class="delete_link"><button class="delete_button">Удалить</button></a>
+                        </div>
+                    </div>
+                    <% 
+                    }
+                    %>
+                    </div>
+                    <p><%= blog.description %></p>
+
+                    
+
+                    <div class="comments">
+                        <h3><%= counter %> Комментария</h3>
+                        <% 
+                            if(rates){ 
+                                rates.forEach(rate =>{
+        
+                                
+                        %>
+                                    <div class="comment">
+                                        <div class="comment-head">
+                                            <img src="/images/icons/profile-img.png" id="" alt="" srcset="">
+
+                                            <p><%= rate.authorId.full_name %></p>
+                                        </div>
+                                        <% if(rate.text.length > 0){%>
+                                            <p>Комментарий: <%= rate.text %></p>
+                                        <% } %>
+                                    </div> 
+                        <% 
+                                })
+                            } 
+                        %>
+                        <% if(user && user._id) {%>
+                        <form  class="add-comment-form" onsubmit="sendRate(event)">
+                            <textarea  id="comment-text" cols="30" rows="5" placeholder="Введите текст комментария"></textarea>
+                            <input type="hidden" value="<%= user._id  %>" id="comment-author">
+                            <input type="hidden" value="<%= blog._id  %>" id="comment-blog">
+        
+                            <button type="submit">Отправить</button>
+                        </form>
+                        <% }else { %>
+                            <div class="comment-unauthorized">
+                            <p>
+                                Чтобы оставить комментарий   
+                                <a href="/register">зарегистрируйтесь</a>,
+                             или <a href="/login">войдите</a>
+                                в аккаунт.
+                            </p>
+                        </div>
+                        <% } %> 
+                        
+                    </div>
+                </div>
+           
+ 
+            </div>
+            
+            
+        </div>
+        <% if (user._id ) { %>
+            <div class="categories">
+                <div class="mini-profile">
+                    <img src="/images/icons/profile-img.png" alt="" srcset="">
+                    <h2><%= user.full_name %></h2>
+                    <p><%= user.about %></p>
+                        <a id="profile" href="/profile/<%= user._id  %>">Редактировать</a>
+
+
+                </div>
+            </div>
+        <% } else { %>
+        <div class="categories">
+            <h3>Категории</h3>
+            <% categories.forEach(category => {
+                %>
+                <a href="?category=<%= category.key %>"><%= category.name%></a>
+                <%
+            })%>
+            <% } %>
+
+        </div>
+    </div>
+    
+    <%- include("partials/scripts.ejs") %>
+
+</body>
+</html>

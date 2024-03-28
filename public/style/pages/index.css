@@ -1,6 +1,7 @@
 .main{
     min-height: 75vh;
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     gap: 20px;
 }
@@ -11,6 +12,11 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
+}
+
+.main-content a{
+    text-decoration: none;
+    color: #000;
 }
 .categories{
     background-color: #fff;
@@ -64,6 +70,12 @@ line-height: 24px;
 }
 .blog_info{
     box-sizing: border-box;
+
+}
+.blog_info2{
+    display: flex;
+
+    justify-content: space-between;
 }
 .blog_info h3{
     color: #000;
@@ -123,29 +135,23 @@ border-bottom: 1px transparent ;
     transition: .8s;
 
 }
-.arrows{
-    margin-top: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-}
-.arrows:hover{
-    cursor: pointer;
-}
+
 .delete_button{
-    border-radius: 4px;
-    background: #00A2DC;
+    background-color: white;
     text-decoration: none;
-    padding: 20px;
-    color: white;
+    border: none;
+    padding: 5px 60px 5px 5px;
+    color: red;
+    font-weight: 600;
 }
 .edit_button{
-    border-radius: 4px;
-    background: #00A2DC;
+    background-color: white;
     text-decoration: none;
-    padding: 20px;
-    color: white;
+    border: none;
+    padding: 5px 20px 5px 5px;
+    font-weight: 600;
+
+    
 }
 .mini-profile{
     display: flex;
@@ -179,4 +185,27 @@ border-bottom: 1px transparent ;
     font-size: 20px;
     font-style: normal;
     font-weight: 500;
+}
+.modal_window {
+    position: relative;
+    display: inline-block;
+}
+
+.modal_window .ellipsis {
+    cursor: pointer;
+}
+
+.modal_window .modal_content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #fefefe;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    z-index: 1;
+    border-radius: 5px;
+}
+
+.modal_content.active {
+    display: block;
 }
