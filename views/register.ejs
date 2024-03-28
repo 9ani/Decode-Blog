@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="<%= currentLanguage %>">
+<html lang="eng">
 <head>
     <%- include('./partials/head.ejs') %>
     <title>Register</title>
@@ -10,7 +10,7 @@
 <body>
     <div class="container"> 
         <form action="/api/signup" method="POST" class="form">
-            <h3><%= __('Register') %></h3>
+            <h3>Register</h3>
             <fieldset class="fieldset">
                 <input type="email" name="email" id="" placeholder="Enter email">
             </fieldset>

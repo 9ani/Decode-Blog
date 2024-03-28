@@ -16,8 +16,8 @@
                 </div>
                 <div class="blog_icons">
                     <div class="blog_icon"><img src="/images/icons/date.svg" alt="" srcset=""><%= blog.time %></div>
-                    <div class="blog_icon"><img src="/images/icons/visibility.svg" alt="" srcset="">21</div>
-                    <div class="blog_icon"><img src="/images/icons/message.svg" alt="" srcset="">4</div>
+                    <div class="blog_icon"><img src="/images/icons/visibility.svg" alt="" srcset=""><%= blog.viewsCount %></div>
+                    <div class="blog_icon"><img src="/images/icons/message.svg" alt="" srcset=""><%= blog.commentsCount %></div>
                     <div class="blog_icon"><img src="/images/icons/forums.svg" alt="" srcset=""><%= blog.category.name %></div>
                     <div class="blog_icon"><img src="/images/icons/person.svg" alt="" srcset=""><%= blog.author?.full_name %></div>
                 </div>

@@ -86,12 +86,12 @@ router.get('/not-found', (req, res) => {
 router.get('/detail/:id', async(req, res)=>{
     const allCategories = await Categories.find();
     const rates = await Rate.find({blogId: req.params.id}).populate('authorId')
-    let counter = 0
-    for (let i = 0; i < rates.length; i++){
-        counter += 1
-    }
+    
     const blog = await Blog.findById(req.params.id).populate('category').populate('author')
-    res.render("detail", {user: req.user ? req.user : {}, blog: blog, rates: rates, counter: counter,   categories: allCategories
+    blog.viewsCount += 1;
+    blog.commentsCount = rates.length;
+        await blog.save();
+    res.render("detail", {user: req.user ? req.user : {}, blog: blog, rates: rates, counter: blog.commentsCount,   categories: allCategories
 })
 })
 

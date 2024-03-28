@@ -8,6 +8,9 @@ const BlogSchema = new mongoose.Schema({
     image: String , 
     description: String,
     time: String,
-    author:{type: Schema.Types.ObjectId, ref:'user'}
+    author:{type: Schema.Types.ObjectId, ref:'user'},
+    viewsCount: { type: Number, default: 0 },
+    commentsCount: { type: Number, default: 0 }
+
 })
 module.exports = mongoose.model('blog', BlogSchema)
